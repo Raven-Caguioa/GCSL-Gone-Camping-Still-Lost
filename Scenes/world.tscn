@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://u2fquts166b7"]
+
+[ext_resource type="PackedScene" uid="uid://bm4fprwjmxllv" path="res://Scenes/walll.tscn" id="1_e7ver"]
+[ext_resource type="PackedScene" uid="uid://dwl8ae2448gyt" path="res://Scenes/player.tscn" id="1_ptnmm"]
+
+[node name="World" type="Node2D"]
+
+[node name="Wall3" parent="." instance=ExtResource("1_e7ver")]
+position = Vector2(903, 170)
+scale = Vector2(1.80999, 7.13152)
+
+[node name="Wall2" parent="." instance=ExtResource("1_e7ver")]
+position = Vector2(631, 444)
+scale = Vector2(73.1758, -3.56304)
+
+[node name="Player" parent="." instance=ExtResource("1_ptnmm")]
+position = Vector2(539, 319)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(1.5, 1.5)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="Wall" parent="." instance=ExtResource("1_e7ver")]
+position = Vector2(697, 294)
+scale = Vector2(5, 11.24)
