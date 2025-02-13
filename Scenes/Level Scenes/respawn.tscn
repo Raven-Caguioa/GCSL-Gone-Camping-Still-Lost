@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxe26m02ivo4t"]
+
+[ext_resource type="Script" path="res://Script/respawn.gd" id="1_hfu6j"]
+
+[node name="Respawn" type="Area2D"]
+script = ExtResource("1_hfu6j")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

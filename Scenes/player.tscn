@@ -1,8 +1,9 @@
-[gd_scene load_steps=38 format=3 uid="uid://dwl8ae2448gyt"]
+[gd_scene load_steps=43 format=3 uid="uid://dwl8ae2448gyt"]
 
 [ext_resource type="Script" path="res://Script/PlayerController.gd" id="1_obi5u"]
 [ext_resource type="Texture2D" uid="uid://cha0s3aw8h311" path="res://Sprites/Knight_player/Idle_KG_2.png" id="1_q13ll"]
 [ext_resource type="Texture2D" uid="uid://cc446tc6fuyeg" path="res://Sprites/Knight_player/Dashing_KG_1.png" id="2_7uax2"]
+[ext_resource type="Texture2D" uid="uid://qrfk5807vygp" path="res://Sprites/Knight_player/ladders_KG_1.png" id="2_cxflw"]
 [ext_resource type="Texture2D" uid="uid://bspac7f0xy24j" path="res://Sprites/Knight_player/Jump_KG_1.png" id="2_emd2e"]
 [ext_resource type="Texture2D" uid="uid://dt3ixsc8xduhe" path="res://Sprites/Knight_player/Walking_KG_2.png" id="3_bbms5"]
 [ext_resource type="Texture2D" uid="uid://dk3w268e3dj47" path="res://Sprites/Knight_player/Walking_KG_1.png" id="4_8x14x"]
@@ -10,6 +11,22 @@
 [sub_resource type="Curve" id="Curve_awbac"]
 _data = [Vector2(0.0105263, 0.967033), 0.0, 0.0, 0, 0, Vector2(1, 0.725275), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1aflo"]
+atlas = ExtResource("2_cxflw")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8es4e"]
+atlas = ExtResource("2_cxflw")
+region = Rect2(100, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yogov"]
+atlas = ExtResource("2_cxflw")
+region = Rect2(200, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2x1is"]
+atlas = ExtResource("2_cxflw")
+region = Rect2(300, 0, 100, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8c0q8"]
 atlas = ExtResource("2_7uax2")
@@ -125,6 +142,23 @@ region = Rect2(600, 0, 100, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e1l4t"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1aflo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8es4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yogov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2x1is")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8c0q8")
@@ -244,7 +278,7 @@ dash_curve = SubResource("Curve_awbac")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e1l4t")
-animation = &"walk"
+animation = &"climb"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1.5)
