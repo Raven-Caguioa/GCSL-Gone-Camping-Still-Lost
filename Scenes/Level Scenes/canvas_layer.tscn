@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://yv11kdk24vxe"]
+
+[ext_resource type="Script" path="res://Script/canvas_layer.gd" id="1_iqfjb"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_iqfjb")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 646.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 455.0
+offset_right = 1152.0
+offset_bottom = 644.0
+
+[node name="Label" type="Label" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 42.0
+offset_right = 1108.0
+offset_bottom = 155.0

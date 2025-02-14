@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://k54mtlctud7k"
-path="res://.godot/imported/e1f31cf2-9be9-4755-bfa9-cc772db633b7 (1).webp-6f63ea671b8d1cf7cf997ed899a3366e.ctex"
+path="res://.godot/imported/e1f31cf2-9be9-4755-bfa9-cc772db633b7 (1).webp-67b44ac8c9f7e8d5fa74ea137e979ac1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Level Scenes/e1f31cf2-9be9-4755-bfa9-cc772db633b7 (1).webp"
-dest_files=["res://.godot/imported/e1f31cf2-9be9-4755-bfa9-cc772db633b7 (1).webp-6f63ea671b8d1cf7cf997ed899a3366e.ctex"]
+source_file="res://Sprites/Background/e1f31cf2-9be9-4755-bfa9-cc772db633b7 (1).webp"
+dest_files=["res://.godot/imported/e1f31cf2-9be9-4755-bfa9-cc772db633b7 (1).webp-67b44ac8c9f7e8d5fa74ea137e979ac1.ctex"]
 
 [params]
 
