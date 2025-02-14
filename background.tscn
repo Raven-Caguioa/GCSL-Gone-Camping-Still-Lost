@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5yl47bmjkm3i"]
+
+[ext_resource type="Texture2D" uid="uid://c70rp6381rwkl" path="res://Sprites/Mondstadt Background Wallpaper/Mondstadt Background Wallpaper/windrise-background-4k.png" id="1_ogm0e"]
+
+[node name="Windrise-background-4k" type="Sprite2D"]
+position = Vector2(578.5, 321.5)
+scale = Vector2(0.280029, 0.281684)
+texture = ExtResource("1_ogm0e")

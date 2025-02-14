@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var jump_force = -400.0
 @export_range(0, 1) var deceleration_on_jump_release = 0.5
 
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -500.0
 
 @export var dash_speed = 500.0
 @export var dash_max_distance = 100.00
