@@ -2,101 +2,133 @@ extends CharacterBody2D
 
 @export var walk_speed = 150.0
 @export var run_speed = 250.0
-@export_range(0, 1) var deceleration = 0.1
-@export_range(0, 1) var acceleration = 0.1
+@export var acceleration = 0.1
+@export var deceleration = 0.1
 
-@export var jump_force = -400.0
-@export_range(0, 1) var deceleration_on_jump_release = 0.5
+@export var jump_force = -500.0
+@export var wall_jump_force = Vector2(250, -500)  # Push away from the wall
+@export var wall_jump_boost = 10.0  # Extra boost for easier wall jumps
+@export var wall_jump_cooldown = 0.2  # Delay between wall jumps
 
-const JUMP_VELOCITY = -500.0
+@export var gravity = 980.0
+@export var coyote_time = 0.15  # Time after leaving ground when you can still jump
 
 @export var dash_speed = 500.0
-@export var dash_max_distance = 100.00
+@export var dash_max_distance = 100.0
+@export var diagonal_dash_multiplier = 1.2  # Increase distance for diagonal dashes
 @export var dash_curve: Curve
 @export var dash_cooldown = 1.0
 
+@export var wall_coyote_time = 0.15  # Time to allow wall jump after leaving
+var wall_touch_timer = 0.0  # Timer to track wall contact
+
 var is_dashing = false
-var dash_start_position = 0
-var dash_direction = 0
+var dash_start_position = Vector2.ZERO
+var dash_direction = Vector2.ZERO
 var dash_timer = 0
+var dash_air_count = 1  # Allow one air dash
+
+var wall_jump_timer = 0.0  
+var coyote_timer = 0.0  
+var can_wall_jump = true  
+var last_safe_position = Vector2.ZERO  
+var last_wall_normal = Vector2.ZERO
+
+var on_ladder: bool = false  
+var was_on_ladder_before_jump: bool = false  
 
 @onready var animated_sprite = $AnimatedSprite2D
 
-@export var gravity = 980.0
-
-var on_ladder: bool = false  # Default to false
-var was_on_ladder_before_jump: bool = false  # Track ladder state before jumping
-
-var last_safe_position = Vector2.ZERO  # Stores the last platform position
-
 func _physics_process(delta: float) -> void:
-	if is_on_floor():  # Update last safe position only when on a platform
+	# Coyote time logic
+	if is_on_floor():
+		last_wall_normal = Vector2.ZERO
+		wall_touch_timer = wall_coyote_time  # Reset timer when touching wall
 		last_safe_position = position  
-	
-	# Handle gravity only if not on a ladder
+		coyote_timer = coyote_time  
+		can_wall_jump = true  
+		dash_air_count = 1  # Reset dash when landing
+	else:
+		coyote_timer -= delta 
+		wall_touch_timer -= delta 
+
+	if wall_jump_timer > 0:
+		wall_jump_timer -= delta  
+	else:
+		can_wall_jump = true  
+
+	# Gravity & Ladder Handling
 	if not on_ladder:
-		if not is_on_floor():
+		if not is_on_floor() and not is_dashing:
 			velocity.y += gravity * delta
 	else:
-		# Reset vertical velocity when on a ladder
 		velocity.y = 0
 		if Input.is_action_pressed("up"):
 			velocity.y = -walk_speed
 		elif Input.is_action_pressed("down"):
 			velocity.y = walk_speed
 
-	# Handle jump
+	# Jump logic
 	if Input.is_action_just_pressed("jump"):
-		if on_ladder: 
-			# Only exit the ladder if the player is pressing the jump button while on the ladder
-			velocity.y = JUMP_VELOCITY  # Apply jump force
-			on_ladder = false  # Exit the ladder when jumping
-		elif is_on_floor() or is_on_wall():
-			velocity.y = JUMP_VELOCITY  # Normal jump
-			was_on_ladder_before_jump = on_ladder  # Remember ladder state before jumping
+		if on_ladder:  
+			velocity.y = jump_force
+			on_ladder = false  
+		elif is_on_floor() or coyote_timer > 0:  
+			velocity.y = jump_force
+			coyote_timer = 0
+		elif is_on_wall() or wall_touch_timer > 0:  
+			wall_jump()  
+			wall_touch_timer = 0  
 
-	# Handle movement speed (walk & run)
-	var speed
-	if Input.is_action_pressed("run"):
-		speed = run_speed
-	else:
-		speed = walk_speed
+	# Handle movement
+	var direction := Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down"))
+	if direction.length() > 0:
+		direction = direction.normalized()
+	var speed = run_speed if Input.is_action_pressed("run") else walk_speed
 
-	# Get horizontal movement input
-	var direction := Input.get_axis("left", "right")
-	if direction:
-		velocity.x = move_toward(velocity.x, direction * speed, speed * acceleration)
+	if direction.x != 0:
+		velocity.x = move_toward(velocity.x, direction.x * speed, speed)
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed * deceleration)
 
 	# Handle dashing
 	if Input.is_action_just_pressed("dash") and direction and not is_dashing and dash_timer <= 0:
-		is_dashing = true
-		dash_start_position = position.x
-		dash_direction = direction
-		dash_timer = dash_cooldown
+		if is_on_floor() or dash_air_count > 0:  # Allow dash if on floor or has air dash left
+			is_dashing = true
+			dash_start_position = position
+			dash_direction = direction
+			dash_timer = dash_cooldown
+
+			var dash_distance = dash_max_distance
+			if abs(dash_direction.x) > 0 and abs(dash_direction.y) > 0:
+				dash_distance *= diagonal_dash_multiplier
+
+			if not is_on_floor():
+				dash_air_count -= 1  # Consume air dash
 
 	if is_dashing:
-		var current_distance = abs(position.x - dash_start_position)
-		if current_distance >= dash_max_distance or is_on_wall():
+		var current_distance = (position - dash_start_position).length()
+		if current_distance >= dash_max_distance or is_on_wall() or is_on_ceiling():
 			is_dashing = false
 		else:
 			if dash_curve:
-				velocity.x = dash_direction * dash_speed * dash_curve.sample(current_distance / dash_max_distance)
+				velocity = dash_direction * dash_speed * dash_curve.sample(current_distance / dash_max_distance)
 			else:
-				velocity.x = dash_direction * dash_speed
-			velocity.y = 0  # Prevent falling during dash
+				velocity = dash_direction * dash_speed
+
+		# Apply gravity similar to jumping
+		velocity.y += gravity * delta
 
 	if dash_timer > 0:
 		dash_timer -= delta
 
-	# Animation logic
+	# Handle animations
 	if animated_sprite:
 		if is_dashing:
 			animated_sprite.play("dash")
 		elif on_ladder:
 			if velocity.y != 0:
-				animated_sprite.play("climb")  # Play climb animation when moving up/down
+				animated_sprite.play("climb")  
 			else:
 				animated_sprite.pause()
 		elif not is_on_floor() and not on_ladder:
@@ -108,17 +140,32 @@ func _physics_process(delta: float) -> void:
 		else:
 			animated_sprite.play("idle")
 
-		# Flip sprite based on direction
-		if velocity.x > 0:
-			animated_sprite.flip_h = false
-		elif velocity.x < 0:
-			animated_sprite.flip_h = true
+	# Ensure the sprite always faces the correct direction
+	if direction.x != 0:
+		animated_sprite.flip_h = direction.x < 0
 
 	move_and_slide()
 
+# Wall Jump Logic with Boost
+func wall_jump():
+	is_dashing = false  # Reset dashing on wall jump
+	var current_wall_normal = get_wall_normal()  # Get current wall direction
+
+	# Only wall jump if switching walls
+	if current_wall_normal != last_wall_normal:
+		can_wall_jump = false
+		wall_jump_timer = wall_jump_cooldown
+
+		var wall_direction = -current_wall_normal.x  # Jump away from the wall
+		velocity = Vector2(wall_jump_force.x * wall_direction, wall_jump_force.y - wall_jump_boost)
+
+		last_wall_normal = current_wall_normal  # Store this wall as the last one
+
+
+
 # Ladder detection logic
 func _on_area_2d_body_entered(body: CharacterBody2D) -> void:
-	if not on_ladder and !was_on_ladder_before_jump:  # Only allow ladder entry if not jumping
+	if not on_ladder and !was_on_ladder_before_jump:  
 		on_ladder = true
 		print("Entered ladder: ", on_ladder)
 
@@ -126,12 +173,11 @@ func _on_area_2d_body_exited(body: CharacterBody2D) -> void:
 	on_ladder = false
 	print("Exited ladder: ", on_ladder)
 
+# Respawn logic
 func respawn():
-	# Set player position to the last safe position
-	position = last_safe_position + Vector2(0, -5)  # Slight offset upwards
+	position = last_safe_position + Vector2(0, -5)  
 
-	# Apply a small downward force to avoid floating
-	if not is_on_floor():  # Only adjust if not on the floor
-		velocity.y = 10  # Small push down to make sure the player doesn't float
+	if not is_on_floor():  
+		velocity.y = 10  
 	
-	velocity = Vector2.ZERO  # Reset velocity to prevent unintended movement
+	velocity = Vector2.ZERO
