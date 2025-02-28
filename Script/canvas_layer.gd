@@ -8,7 +8,8 @@ var dialog_lines = []  # List to store dialogue lines
 var current_line = 0
 
 func _ready():
-	dialog_panel.visible = false  # Hide dialog by default
+	dialog_panel.visible = false
+	set_process_unhandled_input(false)
 
 # Function to start the dialogue
 func show_dialog(lines: Array):
@@ -33,5 +34,13 @@ func hide_dialog():
 # Handle input for progressing through dialogue
 func _input(event):
 	if is_active and event.is_action_pressed("accept"):
+<<<<<<< Updated upstream
 		current_line += 1
 		display_line()
+=======
+		hide_dialog()
+		
+		
+func _unhandled_input(event):
+	get_viewport().set_input_as_handled()
+>>>>>>> Stashed changes
