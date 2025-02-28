@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://bl4wxpcmv4fko"]
+
+[ext_resource type="Texture2D" uid="uid://yedoqv3v6yjj" path="res://Sprites/Kauzz Forest Tiles/Collectables/gold_coin_strip4.png" id="1_0f45x"]
+[ext_resource type="Script" path="res://Script/coin.gd" id="2_oaw7b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhcf7"]
+atlas = ExtResource("1_0f45x")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h7m5"]
+atlas = ExtResource("1_0f45x")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyb1s"]
+atlas = ExtResource("1_0f45x")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5dpv"]
+atlas = ExtResource("1_0f45x")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eni0t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhcf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h7m5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyb1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5dpv")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hliw1"]
+radius = 6.66665
+height = 13.3333
+
+[node name="Coin" type="AnimatedSprite2D"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_eni0t")
+animation = &"spin"
+frame_progress = 0.229386
+script = ExtResource("2_oaw7b")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_hliw1")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

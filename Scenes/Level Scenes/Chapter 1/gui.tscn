@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc2du136nnui5"]
+
+[ext_resource type="PackedScene" uid="uid://bl4wxpcmv4fko" path="res://Scenes/Level Scenes/Chapter 1/coin.tscn" id="1_epcsd"]
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="CoinValue" type="Label" parent="."]
+offset_left = 889.0
+offset_top = 22.0
+offset_right = 1087.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 2
+
+[node name="ScoreValue" type="Label" parent="."]
+offset_left = 955.0
+offset_top = 100.0
+offset_right = 1121.0
+offset_bottom = 142.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 2
+
+[node name="Coin" parent="." instance=ExtResource("1_epcsd")]
+position = Vector2(1121, 59)
+scale = Vector2(3, 4.33333)
+frame_progress = 0.0

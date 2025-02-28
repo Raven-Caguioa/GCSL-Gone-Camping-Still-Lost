@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var walk_speed = 150.0
+@export var walk_speed = 250.0
 @export var run_speed = 250.0
 @export var acceleration = 0.1
 @export var deceleration = 0.1
