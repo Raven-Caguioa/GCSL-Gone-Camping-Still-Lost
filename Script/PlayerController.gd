@@ -31,7 +31,6 @@ var dash_air_count = 1  # Allow one air dash
 var wall_jump_timer = 0.0  
 var coyote_timer = 0.0  
 var can_wall_jump = true  
-var last_safe_position = Vector2.ZERO  
 var last_wall_normal = Vector2.ZERO
 
 var on_ladder: bool = false  
@@ -44,7 +43,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		last_wall_normal = Vector2.ZERO
 		wall_touch_timer = wall_coyote_time  # Reset timer when touching wall
-		last_safe_position = position  
 		coyote_timer = coyote_time  
 		can_wall_jump = true  
 		dash_air_count = 1  # Reset dash when landing
@@ -115,7 +113,6 @@ func _physics_process(delta: float) -> void:
 				velocity = dash_direction * dash_speed * dash_curve.sample(current_distance / dash_max_distance)
 			else:
 				velocity = dash_direction * dash_speed
-
 		# Apply gravity similar to jumping
 		velocity.y += gravity * delta
 
@@ -175,9 +172,9 @@ func _on_area_2d_body_exited(body: CharacterBody2D) -> void:
 
 # Respawn logic
 func respawn():
-	position = last_safe_position + Vector2(0, -5)  
+	position = %RespawnPoint.global_position
 
-	if not is_on_floor():  
+	if not is_on_floor():
 		velocity.y = 10  
-	
+
 	velocity = Vector2.ZERO

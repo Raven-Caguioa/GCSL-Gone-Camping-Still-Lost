@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cwosepyvhar7d"
+path="res://.godot/imported/04 - Fortress Theme.wav-5a15b620a0e27819ae536ad79b6cb545.sample"
+
+[deps]
+
+source_file="res://Sprites/Dark Forest 1.0/Dark Forest 1.0/Soundtrack/04 - Fortress Theme.wav"
+dest_files=["res://.godot/imported/04 - Fortress Theme.wav-5a15b620a0e27819ae536ad79b6cb545.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
