@@ -608,12 +608,15 @@ offset_bottom = -68.0
 scale = Vector2(1.76208, 1.95445)
 <<<<<<< Updated upstream
 
+<<<<<<< HEAD
 [node name="SpawnPoint" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(235, 362)
 =======
 >>>>>>> Stashed changes
 
+=======
+>>>>>>> parent of 9cf4344 (...)
 [connection signal="body_entered" from="Ladder" to="Player" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Ladder" to="Player" method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="Interaction2" to="Interaction2" method="_on_body_entered"]
