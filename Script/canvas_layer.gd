@@ -35,12 +35,18 @@ func hide_dialog():
 func _input(event):
 	if is_active and event.is_action_pressed("accept"):
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		current_line += 1
 		display_line()
 =======
+=======
+>>>>>>> Stashed changes
 		hide_dialog()
 		
 		
 func _unhandled_input(event):
 	get_viewport().set_input_as_handled()
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
