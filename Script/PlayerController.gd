@@ -34,7 +34,9 @@ var can_wall_jump = true
 var last_wall_normal = Vector2.ZERO
 
 var on_ladder: bool = false  
-var was_on_ladder_before_jump: bool = false  
+var was_on_ladder_before_jump: bool = false
+
+var current_position = Vector2.ZERO
 
 @onready var animated_sprite = $AnimatedSprite2D
 
