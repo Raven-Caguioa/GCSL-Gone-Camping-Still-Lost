@@ -1,5 +1,6 @@
 extends Area2D
 
+@warning_ignore("unused_parameter")
 var player_inside = false
 @onready var label = $Label
 @onready var dialog_layer = get_node("DialogBox")

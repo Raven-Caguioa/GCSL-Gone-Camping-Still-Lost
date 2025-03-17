@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dwl8ae2448gyt"]
+[gd_scene load_steps=47 format=3 uid="uid://dwl8ae2448gyt"]
 
 [ext_resource type="Script" path="res://Script/PlayerController.gd" id="1_obi5u"]
 [ext_resource type="Texture2D" uid="uid://cc446tc6fuyeg" path="res://Sprites/Knight_player/Dashing_KG_1.png" id="2_7uax2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dk3w268e3dj47" path="res://Sprites/Knight_player/Walking_KG_1.png" id="4_8x14x"]
 [ext_resource type="Texture2D" uid="uid://b5bjegxgrx01v" path="res://Sprites/Knight_player/Idle_KG_1.png" id="4_camkb"]
 [ext_resource type="Texture2D" uid="uid://dy5s4y4lj6mnq" path="res://Sprites/Knight_player/Landing_KG_1.png" id="6_bu6fg"]
+[ext_resource type="PackedScene" uid="uid://menwquafrp6n" path="res://Scenes/Level Scenes/Chapter 1/explosion.tscn" id="8_t5o0k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1aflo"]
 atlas = ExtResource("2_cxflw")
@@ -313,3 +314,5 @@ frame_progress = 0.960665
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_7tvws")
+
+[node name="explosion" parent="." instance=ExtResource("8_t5o0k")]

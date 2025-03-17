@@ -40,6 +40,8 @@ var current_position = Vector2.ZERO
 var respawn_position: Vector2
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var explosion = $explosion  # Reference to your explosion effect
+@export var respawn_delay = 1.0  # Time before respawning
 
 func _physics_process(delta: float) -> void:
 	# Coyote time logic
@@ -162,26 +164,45 @@ func wall_jump():
 		last_wall_normal = current_wall_normal  # Store this wall as the last one
 
 
+func die():
+	velocity = Vector2.ZERO  # Stop movement
+	set_physics_process(false)  # Freeze player physics
+	set_process(false)  # Disable regular processing (optional)
+	
+	animated_sprite.visible = false  # Hide player
+	explosion.restart()  # Play explosion effect
+	explosion.emitting = true  # Start particle system
+
+	await get_tree().create_timer(respawn_delay).timeout  # Wait before respawning
+	respawn()
+
 
 # Ladder detection logic
-func _on_area_2d_body_entered(body: CharacterBody2D) -> void:
+@warning_ignore("unused_parameter")
+func _on_area_2d_body_entered(body) -> void:
 	if not on_ladder and !was_on_ladder_before_jump:  
 		on_ladder = true
 		print("Entered ladder: ", on_ladder)
 		
-func _on_checkpoint_body_entered(body: CharacterBody2D) -> void:
-	if body.is_in_group("Player"):
+func _on_checkpoint_body_entered(body) -> void:
+	if body is CharacterBody2D and body.is_in_group("Player"):
 		print("hhelo")
-		respawn_position = global_position  # This gets the Area2D's position
+		respawn_position = body.global_position  # Get the player's position
 		print("Checkpoint updated to: ", respawn_position)
 
-func _on_area_2d_body_exited(body: CharacterBody2D) -> void:
+func _on_area_2d_body_exited(body) -> void:
 	on_ladder = false
 	print("Exited ladder: ", on_ladder)
 
 # Respawn logic
 func respawn():
-	position = respawn_position
+	position = respawn_position  # Move player to the respawn point
+	velocity = Vector2.ZERO  # Reset velocity
+
+	set_physics_process(true)  # Re-enable physics
+	set_process(true)  # Resume regular processing (optional)
+	
+	animated_sprite.visible = true  # Show player again
 
 	if not is_on_floor():
 		velocity.y = 10  

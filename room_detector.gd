@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var camera_2d = $"../Player/Camera2D"
 @onready var shape = $CollisionShape2D
-
+@warning_ignore("unused_parameter")
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		var shape_size = shape.shape.get_rect().size * shape.global_scale  # Apply global scale correctly

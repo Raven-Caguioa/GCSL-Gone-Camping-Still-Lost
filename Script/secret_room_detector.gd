@@ -2,7 +2,7 @@ extends Area2D
 
 @export var tilemap: TileMap  # Drag your TileMap here in the Inspector
 @export var layer_name: String = "$TileMapLayers/SecretArea"  # Name of the hidden layer
-
+@warning_ignore("unused_parameter")
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		toggle_secret_layer(false)  # Make the layer transparent & disable collision

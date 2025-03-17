@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://Scenes/Level Scenes/Chapter 1/Comment.gd" id="17_bgvsr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ivna6"]
-size = Vector2(243.016, 90)
+size = Vector2(763, 90)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_op23g"]
 size = Vector2(555, 183.5)
@@ -285,6 +285,15 @@ frame_progress = 0.899421
 [node name="Coin21" parent="Coins" instance=ExtResource("9_qlyou")]
 position = Vector2(3113, 601)
 
+[node name="Coin22" parent="Coins" instance=ExtResource("9_qlyou")]
+position = Vector2(6534, 1614)
+
+[node name="Coin23" parent="Coins" instance=ExtResource("9_qlyou")]
+position = Vector2(6591, 1614)
+
+[node name="Coin24" parent="Coins" instance=ExtResource("9_qlyou")]
+position = Vector2(6481, 1615)
+
 [node name="TileMapLayers" type="Node2D" parent="."]
 position = Vector2(4127, -296)
 
@@ -451,7 +460,7 @@ position = Vector2(1585, 642)
 [node name="DeathArea" parent="DeathAreas" instance=ExtResource("10_yxost")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathAreas/DeathArea"]
-position = Vector2(2080.98, 879)
+position = Vector2(2055.5, 879)
 shape = SubResource("RectangleShape2D_ivna6")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DeathAreas/DeathArea"]
@@ -580,7 +589,7 @@ shape = SubResource("RectangleShape2D_i8gcf")
 [node name="Player" parent="." groups=["Player"] instance=ExtResource("15_qq6xy")]
 z_index = 2
 y_sort_enabled = true
-position = Vector2(1570, 616)
+position = Vector2(2281, 4456)
 scale = Vector2(1.5, 1.5)
 walk_speed = 300.0
 run_speed = 350.0
@@ -593,7 +602,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="Story"]
-position = Vector2(10569, 3276)
+position = Vector2(618, 4401)
 script = ExtResource("17_bgvsr")
 metadata/_edit_group_ = true
 
@@ -709,6 +718,14 @@ metadata/_edit_group_ = true
 position = Vector2(-1, -1)
 shape = SubResource("CircleShape2D_l810o")
 
+[node name="checkpoint14" type="Area2D" parent="CheckPoints" groups=["checkpoints"]]
+position = Vector2(2436, 4503)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoints/checkpoint14" groups=["checkpoints"]]
+position = Vector2(-1, -1)
+shape = SubResource("CircleShape2D_l810o")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -791,7 +808,7 @@ position = Vector2(10205, 1879)
 shape = SubResource("RectangleShape2D_u4fob")
 one_way_collision = true
 
-[node name="CollisionShape2D15" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D17" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(10000, 1684)
 shape = SubResource("RectangleShape2D_u4fob")
 one_way_collision = true
@@ -814,3 +831,4 @@ one_way_collision = true
 [connection signal="body_entered" from="CheckPoints/checkpoint11" to="Player" method="_on_checkpoint_body_entered"]
 [connection signal="body_entered" from="CheckPoints/checkpoint12" to="Player" method="_on_checkpoint_body_entered"]
 [connection signal="body_entered" from="CheckPoints/checkpoint13" to="Player" method="_on_checkpoint_body_entered"]
+[connection signal="body_entered" from="CheckPoints/checkpoint14" to="Player" method="_on_checkpoint_body_entered"]

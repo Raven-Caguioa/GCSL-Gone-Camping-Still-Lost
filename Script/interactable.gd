@@ -1,5 +1,6 @@
 extends Area2D
 
+@warning_ignore("unused_parameter")
 var player_inside = false
 @onready var label = $Label
 @export var layer_to_disable: int = 1  # Change this to the correct TileMap layer index
@@ -24,11 +25,11 @@ func _process(delta):
 		else:
 			print("Not Enough Coins!")
 
-func _on_body_entered(body: CharacterBody2D) -> void:
+func _on_body_entered(body) -> void:
 	if not collision_shape.disabled:  # Only allow interaction if Area2D is active
 		player_inside = true
 		label.visible = true
 
-func _on_body_exited(body: CharacterBody2D) -> void:
+func _on_body_exited(body) -> void:
 	player_inside = false
 	label.visible = false
