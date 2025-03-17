@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cu0o6tn8lsswo"
-path="res://.godot/imported/Dawn_face_normal2_blink.png-147bd5e27a3ac4b73e982eab41a7ac3d.ctex"
+uid="uid://cdvgi1xjthu1p"
+path="res://.godot/imported/tile_set_aleatorio.png-6dc7e79d824fdfeb9022d6b7227d02d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Dawn_sprites_v1.2/Layered Side Image Sprites/Dawn/Dawn_face_normal2_blink.png"
-dest_files=["res://.godot/imported/Dawn_face_normal2_blink.png-147bd5e27a3ac4b73e982eab41a7ac3d.ctex"]
+source_file="res://Sprites/tile_set_aleatorio.png"
+dest_files=["res://.godot/imported/tile_set_aleatorio.png-6dc7e79d824fdfeb9022d6b7227d02d6.ctex"]
 
 [params]
 

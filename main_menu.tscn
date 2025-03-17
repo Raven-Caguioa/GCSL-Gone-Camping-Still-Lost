@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2uyp7ib0lp8t"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_ci4td"]
+[ext_resource type="Texture2D" uid="uid://dj00qn0qvmtau" path="res://Sprites/Mondstadt Background Wallpaper/Mondstadt Background Wallpaper/windrise-background.png" id="1_fcl06"]
+[ext_resource type="Theme" uid="uid://c4t2gc60mi3ld" path="res://new_theme.tres" id="2_rltls"]
+[ext_resource type="StyleBox" uid="uid://c83mk4ma3d2de" path="res://main_menu.tres" id="3_2xlai"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uodym"]
+font_size = 61
+outline_size = 2
+outline_color = Color(0.67598, 0.981621, 0.798515, 1)
+shadow_size = 9
+
+[node name="CanvasLayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ci4td")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -452.0
+offset_top = -112.0
+offset_right = 444.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fcl06")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_rltls")
+theme_override_styles/normal = ExtResource("3_2xlai")
+text = "Play"
+
+[node name="Options" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_rltls")
+theme_override_styles/normal = ExtResource("3_2xlai")
+text = "Options"
+
+[node name="Exit" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_rltls")
+theme_override_styles/normal = ExtResource("3_2xlai")
+text = "Exit"
+
+[node name="test" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "adawdawdawadwadawdawda"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+offset_left = 223.0
+offset_top = 113.0
+offset_right = 935.0
+offset_bottom = 197.0
+grow_horizontal = 2
+text = "Gone Camping, Still Lost"
+label_settings = SubResource("LabelSettings_uodym")
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Options" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/test" to="." method="_on_test_pressed"]

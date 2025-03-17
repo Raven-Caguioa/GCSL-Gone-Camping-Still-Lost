@@ -37,6 +37,7 @@ var on_ladder: bool = false
 var was_on_ladder_before_jump: bool = false
 
 var current_position = Vector2.ZERO
+var respawn_position: Vector2
 
 @onready var animated_sprite = $AnimatedSprite2D
 
@@ -167,6 +168,12 @@ func _on_area_2d_body_entered(body: CharacterBody2D) -> void:
 	if not on_ladder and !was_on_ladder_before_jump:  
 		on_ladder = true
 		print("Entered ladder: ", on_ladder)
+		
+func _on_checkpoint_body_entered(body: CharacterBody2D) -> void:
+	if body.is_in_group("Player"):
+		print("hhelo")
+		respawn_position = global_position  # This gets the Area2D's position
+		print("Checkpoint updated to: ", respawn_position)
 
 func _on_area_2d_body_exited(body: CharacterBody2D) -> void:
 	on_ladder = false
@@ -174,7 +181,7 @@ func _on_area_2d_body_exited(body: CharacterBody2D) -> void:
 
 # Respawn logic
 func respawn():
-	position = %RespawnPoint.global_position
+	position = respawn_position
 
 	if not is_on_floor():
 		velocity.y = 10  
