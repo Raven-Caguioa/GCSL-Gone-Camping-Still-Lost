@@ -39,6 +39,7 @@ var was_on_ladder_before_jump: bool = false
 var current_position = Vector2.ZERO
 var respawn_position: Vector2
 
+@onready var death_screen = get_node("/root/Chapter1/DeathScreen")
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var explosion = $explosion  # Reference to your explosion effect
 @export var respawn_delay = 1.0  # Time before respawning
@@ -163,18 +164,33 @@ func wall_jump():
 
 		last_wall_normal = current_wall_normal  # Store this wall as the last one
 
-
 func die():
-	velocity = Vector2.ZERO  # Stop movement
-	set_physics_process(false)  # Freeze player physics
-	set_process(false)  # Disable regular processing (optional)
+	if GameManager.heart >= 1:
+		GameManager.heart -= 1
+		velocity = Vector2.ZERO  # Stop movement
+		set_physics_process(false)  # Freeze player physics
+		set_process(false)  # Disable regular processing
 	
-	animated_sprite.visible = false  # Hide player
-	explosion.restart()  # Play explosion effect
-	explosion.emitting = true  # Start particle system
+		animated_sprite.visible = false  # Hide player
+		explosion.restart()  # Play explosion effect
+		explosion.emitting = true  # Start particle system
 
-	await get_tree().create_timer(respawn_delay).timeout  # Wait before respawning
-	respawn()
+		await get_tree().create_timer(respawn_delay).timeout  # Wait before respawning
+		respawn()
+	else:
+		velocity = Vector2.ZERO  
+		set_physics_process(false)
+		set_process(false)
+	
+		animated_sprite.visible = false
+		explosion.restart()
+		explosion.emitting = true  
+
+		# Fade in death screen
+		respawn()
+		death_screen.show_screen()
+
+
 
 
 # Ladder detection logic

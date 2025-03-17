@@ -2,6 +2,7 @@ extends Node2D
 
 var coins = 10
 var score = 0
+var heart = 3
 var is_paused = false  # Track if the game is paused
 
 var hidden_scenes = ["MainMenu", "GameOverScreen", "world_1", "main_menu"]
