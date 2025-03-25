@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc2du136nnui5"]
+[gd_scene load_steps=3 format=3 uid="uid://cc2du136nnui5"]
 
 [ext_resource type="PackedScene" uid="uid://bl4wxpcmv4fko" path="res://Scenes/Level Scenes/Chapter 1/coin.tscn" id="1_epcsd"]
+[ext_resource type="Texture2D" uid="uid://s2v2uglrq4a2" path="res://Sprites/items/Skull 0021.png" id="2_3se77"]
 
 [node name="GUI" type="CanvasLayer"]
 
@@ -26,3 +27,16 @@ horizontal_alignment = 2
 position = Vector2(1121, 59)
 scale = Vector2(3, 4.33333)
 frame_progress = 0.0
+
+[node name="DeathValue" type="Label" parent="."]
+offset_left = 128.0
+offset_top = 29.0
+offset_right = 331.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 64)
+scale = Vector2(4, 4)
+texture = ExtResource("2_3se77")

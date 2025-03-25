@@ -1,9 +1,9 @@
 extends Control
 
 func _ready():
-	for button in get_children():
-		if button is Button:
-			button.pressed.connect(_on_button_pressed.bind(button))
+	# Find all buttons inside containers
+	for button in find_children("*", "Button", true):
+		button.pressed.connect(_on_button_pressed.bind(button))
 
 func _on_button_pressed(button: Button):
 	match button.name:
@@ -15,7 +15,6 @@ func _on_button_pressed(button: Button):
 		"Exit":
 			print("Exit Pressed")
 			get_tree().quit()
-
 
 func _on_test_pressed() -> void:
 	print("test")

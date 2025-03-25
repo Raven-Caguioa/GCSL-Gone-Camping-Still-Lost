@@ -3,6 +3,9 @@ extends Node2D
 var coins = 10
 var score = 0
 var heart = 3
+var death = 0
+var blue_key = 0
+var white_key = 0
 var is_paused = false  # Track if the game is paused
 
 var hidden_scenes = ["MainMenu", "GameOverScreen", "world_1", "main_menu"]
@@ -10,6 +13,7 @@ var hidden_scenes = ["MainMenu", "GameOverScreen", "world_1", "main_menu"]
 func _process(delta: float) -> void:
 	$"GUI/CoinValue".text = str(coins)
 	$"GUI/ScoreValue".text = str(score)
+	$"GUI/DeathValue".text = str(death)
 
 func _ready():
 	check_gui_visibility()

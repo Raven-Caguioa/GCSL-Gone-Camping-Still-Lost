@@ -1,35 +1,37 @@
 extends Area2D
 
-@warning_ignore("unused_parameter")
 var player_inside = false
+@export var layer_to_disable: int = 1
+@onready var tilemap_layer = $"../TileMapLayers/Experimental Door"
+@onready var tilemap_collision = get_parent().get_node("Door/Experimental")
+@onready var collision_shape = $CollisionShape2D
 @onready var label = $Label
-@export var layer_to_disable: int = 1  # Change this to the correct TileMap layer index
-@onready var tilemap_layer = $"../TileMapLayers/Experimental Door"  # Adjust path to match your TileMap node
-@onready var tilemap_collision = get_parent().get_node("StaticBody2D/Experimental")  # Adjust if needed
-@onready var collision_shape = $CollisionShape2D  # Reference to Area2D's CollisionShape2D
+@onready var icon = $Sprite2D
 
 func _ready():
+	await get_tree().process_frame  # Wait one frame to ensure visibility updates
 	label.visible = false
+	icon.visible = false
 
 func _process(delta):
 	if player_inside and Input.is_action_just_pressed("interact"):
 		if GameManager.coins >= 10:
 			GameManager.coins -= 10
 			print("Door Opened!")
-			tilemap_layer.visible = false  # Hide the door
-			tilemap_collision.set_deferred("disabled", true)  # Disable collision
-
-			# Make the Area2D inaccessible
-			collision_shape.set_deferred("disabled", true)  # Disable Area2D collision
-			label.visible = false  # Hide label
+			tilemap_layer.visible = false
+			tilemap_collision.set_deferred("disabled", true)
+			collision_shape.set_deferred("disabled", true)
+			label.visible = false
+			icon.visible = false
 		else:
 			print("Not Enough Coins!")
 
 func _on_body_entered(body) -> void:
-	if not collision_shape.disabled:  # Only allow interaction if Area2D is active
-		player_inside = true
-		label.visible = true
+	player_inside = true
+	label.visible = true
+	icon.visible = true
 
 func _on_body_exited(body) -> void:
 	player_inside = false
-	label.visible = false
+	icon.visible = false
+	label.visible = false  # Fix this so it hides when leaving
